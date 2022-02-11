@@ -1,2 +1,4 @@
 # homerdemo
-This is a demo
+
+This project was built for testing Github Actions functionality
+
