@@ -38,3 +38,27 @@ jobs:
           tags: homervt/demo-github-actions:latest
           cache-from: type=registry,ref=homervt/demo-github-actions:latest
           cache-to: type=inline
+
+      - name: Deploy Image
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH Connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: 
+            echo "Hello World"
+          
+          # |
+          #   hostname
+          #   chmod +x ./delete_images.sh
+          #   ./delete_images.sh
+          #   docker pull homervt/demo-github-actions:latest
+          #   docker run -d --rm --name homertest -p 8080:8080 homervt/demo-github-actions:latest
